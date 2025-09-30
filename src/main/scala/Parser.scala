@@ -2,13 +2,8 @@ import scala.io.Source
 
 object Parser {
 
-  def parseFile(filePath: String): Either[AppError, Grammar] = {
+  def parseFile(lines: List[String]): Either[AppError, Grammar] = {
     try {
-
-      val source = Source.fromFile(filePath)
-      val lines = source.getLines().toList
-      source.close()
-
       val parsedLines = lines
         .map(_.trim)
         .filter(line => line.nonEmpty && !line.startsWith("#"))
@@ -48,7 +43,7 @@ object Parser {
     val pattern = "(.+)\\s*->\\s*(.+)".r
     line match {
       case pattern(sequence, name) =>
-        Some(Combo(sequence.split(",").map(_.trim).toList, name.trim))
+        Some(Combo(sequence.split(",").flatMap(_.split('+')).map(_.trim).toList, name.trim))
       case _ => None
     }
   }

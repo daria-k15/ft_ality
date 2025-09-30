@@ -9,6 +9,5 @@ object Printer {
       println(s"${combo.sequence.mkString(",")} -> ${combo.moveName}")
     }
     println("__________________________________")
-//    grammar.combos.foreach {case it => println(s"${it.sequence.} -> ${it.moveName}")}
   }
 }
