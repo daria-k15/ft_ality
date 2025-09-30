@@ -1,0 +1,53 @@
+# KeyMapping:
+'q' -> Block
+'↓' -> Down
+'w' -> Flip Stance
+'←' -> Left
+'→' -> Right
+'e' -> Tag
+'a' -> Throw
+'↑' -> Up
+'s' -> [BK]
+'d' -> [BP]
+'z' -> [FK]
+'x' -> [FP]
+
+# Combos:
+Left+[FP] -> Blade Swipe (Baraka)
+Left+[BP] -> Cross Swipe (Baraka)
+Right+[BP] -> Gut Strike (Baraka)
+Left+[FK]-> Foot Stomp (Baraka)
+Up+[FK] -> Hop Kick (Baraka)
+Right+[BK] -> Quick Knee (Baraka)
+Up+[BK] -> Big Legs (Baraka)
+Left+[BK] -> Sweep (Baraka)
+Down+[BP] -> Blade Uppercut (Baraka)
+[FP],[BP],[FP] -> Tarkatan Rush (Baraka)
+[BP] -> Claw Slam (Freddy Krueger)
+[BP] -> Knockdown (Sonya)
+[BP] -> Fist of Death (Liu-Kang)
+[BP],[FP] -> Saibot Blast (Noob Saibot)
+[BP],[FP] -> Active Duty (Jax)
+Left,[FP] -> Dodge hit (Sonya)
+Left,[FP] -> Left punch (Freddy Krueger)
+Left -> Fading to the left (Liu-Kang)
+Down,Right+[FK] -> Scissor Kick (Sonya)
+Up,Up+[FK] -> Bicycle Kick (Liu Kang)
+Right+[FK] -> Glide Kick (Johnny Cage)
+Down,Left+[FK] -> Shadow Kick (Johnny Cage)
+Down,Left+[FP] -> Energy Ball (Sub-Zero)
+Down,Right+[FP] -> Ice Ball (Sub-Zero)
+Down,Down+[BP] -> Teleport (Scorpion)
+Left+[FP],[BP] -> Spear (Scorpion)
+Down,Left+[FP] -> Fan Throw (Kitana)
+Down,Right+[BP] -> Square Wave Punch (Kitana)
+Down,Left+[FK] -> Wind Kick (Fujin)
+Down,Down+[FK] -> Sky Wakka (Fujin)
+Down,Down+[FP] -> Ground Pound (Jax)
+Down,Left+[FP] -> Gotcha Grab (Jax)
+Down,Left+[BK] -> Leg Grab (Goro)
+Down,Up -> Stomp (Goro)
+Down,Right+[FP] -> Fireball (Raiden)
+Down,Down,Right+[FK] -> Superman (Raiden)
+Down,Left+[FP] -> Sai Blast (Mileena)
+Down,Right+[FK] -> Roll (Mileena)
