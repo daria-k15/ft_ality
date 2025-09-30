@@ -2,7 +2,10 @@
 SBT = sbt
 
 # Grammar file
-GRAMMAR = grammars/valid_file.grm
+GRAMMAR ?=
+DEBUG ?=
+
+.PHONY: all compile run clean re version
 
 all: run
 
@@ -16,7 +19,7 @@ compile:
 
 run:
 	@echo run
-	@$(SBT) "run $(GRAMMAR)"
+	@$(SBT) "run $(GRAMMAR) $(DEBUG)"
 
 re:	clean compile
 
