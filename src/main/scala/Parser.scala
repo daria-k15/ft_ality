@@ -1,51 +1,43 @@
-import scala.io.Source
-
 object Parser {
+
+  private def cleanLine(line: String): String =
+    line.takeWhile(_ != '#').trim
 
   def parseFile(lines: List[String]): Either[AppError, Grammar] = {
     try {
-      val parsedLines = lines
-        .map(_.trim)
-        .filter(line => line.nonEmpty && !line.startsWith("#"))
-        .flatMap(parseLine)
+      val keyMappingLines = lines
+        .dropWhile(l => !l.trim.startsWith("# KeyMapping:"))
+        .drop(1)
+        .takeWhile(l => !l.trim.startsWith("# Combos:"))
+        .map(cleanLine)
 
-      val (keys, combos) = parsedLines.foldLeft(List[KeyMapping](), List[Combo]()) {
-        case ((keys, combos), line) => line match {
-          case k: KeyMapping => (k :: keys, combos)
-          case c: Combo => (keys, c :: combos)
-        }
+      val comboLines = lines
+        .dropWhile(l => !l.trim.startsWith("# Combos:"))
+        .drop(1)
+        .map(cleanLine)
+
+      val keyMappings = keyMappingLines.map { line =>
+        val Array(key, action) = line.split("->", 2).map(_.trim.stripPrefix("'").stripSuffix("'"))
+        KeyMapping(key, action)
       }
 
-      Right(Grammar(keys, combos))
+      val combos = comboLines.map { line =>
+        val Array(seq, move) = line.split("->", 2).map(_.trim)
+        val sequence = parseSequence(seq)
+        Combo(sequence, move)
+      }
+
+      Right(Grammar(keyMappings, combos))
     } catch {
-      case e: Exception => Left(AppError.ParsingError("Got error while parsing file: ${e.getMessage}"))
+      case e: Exception => Left(AppError.ParsingError(s"Got error while parsing file: ${e.getMessage}"))
     }
   }
 
-  private def parseLine(line: String): Option[GrammarSealed] = {
-    line match {
-      case l if l.startsWith("'") && l.contains("->") => parseKeyMapping(l)
-      case l if l.contains("->") => parseCombo(l)
-      case _ => None
-    }
+  private def parseSequence(seq: String): List[String] = {
+    seq.split(',')
+      .flatMap(_.split('+'))
+      .map(_.trim)
+      .filter(_.nonEmpty)
+      .toList
   }
-
-  private def parseKeyMapping(line: String): Option[KeyMapping] = {
-    val pattern = "'(.+)'\\s*->\\s*(.+)".r
-
-    line match {
-      case pattern(key, action) => Some(KeyMapping(key, action))
-      case _ => None
-    }
-  }
-
-  private def parseCombo(line: String): Option[Combo] = {
-    val pattern = "(.+)\\s*->\\s*(.+)".r
-    line match {
-      case pattern(sequence, name) =>
-        Some(Combo(sequence.split(",").flatMap(_.split('+')).map(_.trim).toList, name.trim))
-      case _ => None
-    }
-  }
-
 }

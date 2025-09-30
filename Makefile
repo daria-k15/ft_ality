@@ -2,7 +2,7 @@
 SBT = sbt
 
 # Grammar file
-GRAMMAR = grammars/mk9.grm
+GRAMMAR = grammars/valid_file.grm
 
 all: run
 
