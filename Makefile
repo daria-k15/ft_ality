@@ -1,28 +1,25 @@
-# Scala Build Tool
 SBT = sbt
+GRAMMAR ?= 
+DEBUG ?= 
 
-# Grammar file
-GRAMMAR ?= grammars/valid_file.grm
-DEBUG ?= --debug
-
-.PHONY: all compile run clean re version
+.PHONY: all compile run clean re version build
 
 all: run
 
-clean:
-	@echo clean
-	@$(SBT) clean
+build:
+	docker build -t ft_ality .
+
+run:
+	docker-compose run --rm app sbt "run $(GRAMMAR) $(DEBUG)"
 
 compile:
 	@echo compile
 	@$(SBT) compile
 
-run:
-	docker-compose run --rm app $(GRAMMAR) $(DEBUG)
-	#@echo run
-	#@$(SBT) "run $(GRAMMAR) $(DEBUG)"
-
 re:	clean compile
+
+clean:
+	rm -rf target project/target
 
 version:
 	@$(SBT) version
