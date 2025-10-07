@@ -11,9 +11,8 @@ object GrammarValidator {
       Left(AppError.ValidationError("Combo contains empty sequence or move name"))
     } else {
       val availableActions = grammar.keyMapping.map(_.action).toSet
-      val comboTokens = grammar.combos.flatMap(_.sequence).toSet
+      val comboTokens = grammar.combos.flatMap(_.sequence).flatten.toSet
       val missingTokens = comboTokens.diff(availableActions)
-
       if (missingTokens.nonEmpty) {
         Left(AppError.ValidationError(s"Combo references undefined tokens: ${missingTokens.mkString(", ")}"))
       } else {

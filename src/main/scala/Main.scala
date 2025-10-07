@@ -13,6 +13,10 @@ object Main {
     println("Type combo as keys separated by spaces (e.g.: s d x) or enter 'exit' to quit.")
   }
 
+  private def translateInput(group: String, keyMap: Map[String, String]): String = {
+    group.split('+').map(k => keyMap.getOrElse(k, k)).mkString("+")
+  }
+
   def main(args: Array[String]): Unit = {
     val result: Either[AppError, Unit] = args.toList match {
       case Nil =>
@@ -41,14 +45,14 @@ object Main {
             val line = scala.io.StdIn.readLine()
             if (line == null || line.trim.toLowerCase == "exit") ()
             else {
-              val inputKeys = line.split(" ").map(_.trim).filter(_.nonEmpty).toList
+              val groups = line.trim.split("\\s+").toList.map(g => translateInput(g, keyMap))
               if (debugMode) {
-                val trace = fsm.debugTrace(inputKeys)
-                if (trace.nonEmpty) println(trace.mkString("\n"))
+                val trace = fsm.debugTrace(groups)
+                println(trace.mkString("\n"))
               }
-              val recognized = fsm.recognize(inputKeys)
+              val recognized = fsm.recognize(groups)
               if (recognized.isEmpty) println("No move recognized.")
-              else recognized.foreach(move => println(s"✓ Move recognized: $move"))
+              else recognized.foreach(mv => println(s"Move recognized: $mv"))
               loop()
             }
           }
