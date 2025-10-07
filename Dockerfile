@@ -1,12 +1,11 @@
-FROM openjdk:11-jdk-slim
+FROM eclipse-temurin:17-jdk-jammy
 
 RUN apt-get update \
     && apt-get install -y curl gnupg \
     && echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | tee /etc/apt/sources.list.d/sbt.list \
-    && curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x99e82a75642ac823" | apt-key add \
+    && curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x99e82a75642ac823" | gpg --dearmor -o /etc/apt/trusted.gpg.d/sbt.gpg \
     && apt-get update \
-    && apt-get install -y sbt \
-    && apt-get install -y scala make \
+    && apt-get install -y sbt make \
     && apt-get clean
 
 WORKDIR /app
